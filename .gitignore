@@ -1,0 +1,15 @@
+# gradle
+/build/
+/.gradle/
+
+# eclipse
+/bin/
+/.settings/
+/.classpath
+/.project
+
+# custom
+/testserver/
+/final/
+*.bat
+*.sh
