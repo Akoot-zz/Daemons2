@@ -1,34 +1,58 @@
 package com.Akoot.daemons;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.Akoot.daemons.commands.DaemonsCommand;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class Daemons
+public class Daemons extends JavaPlugin
 {
-	List<DaemonsCommand> commands = new ArrayList<DaemonsCommand>();
-	
+	private static Daemons instance;
+	private HashSet<User> onlineUsers;
+	private Logger logger;
+	private File userDir;
+
+	@Override
 	public void onEnable()
 	{
-		checkUpdate();
-		
-		for(DaemonsCommand cmd: commands)
-		{
-			cmd.onCommand();
-		}
+		instance = new Daemons();
+		logger = this.getLogger();
+		userDir = new File(getDataFolder(), "users");
+		//TODO: checkUpdate();
 	}
 	
-	private void checkUpdate()
+	public File getUsersFolder()
 	{
-		if(1 < 2)
-		{
-			update();
-		}
+		return userDir;
 	}
 	
-	private void update()
+	public File dataFolder()
 	{
-		System.out.println("xoxo");
+		return new File(this.getDataFolder().getParentFile(), "Daemons");
+	}
+	
+	public void addOnlineUser(User user)
+	{
+		onlineUsers.add(user);
+		logger.log(Level.FINE, "Added a new User instance for: " + user);
+	}
+	
+	public void removeOnlineUser(User user)
+	{
+		onlineUsers.remove(user);
+	}
+
+	//@Deprecated
+	public static Daemons getInstance()
+	{
+		return instance;
+	}
+
+	@Override
+	public void onDisable()
+	{
+
 	}
 }
