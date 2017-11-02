@@ -1,0 +1,15 @@
+name: Daemons
+version: @version@
+description: Daemons
+authors: [Akoot]
+website: https://github.com/akoot/daemons
+
+main: com.Akoot.daemons.Daemons
+
+commands:
+  daemons:
+    description: daemons commands
+    permission: daemons.command.daemons
+  gamemode:
+    description: Switches from one gamemode to another
+    permission: bukkit.command.gamemode

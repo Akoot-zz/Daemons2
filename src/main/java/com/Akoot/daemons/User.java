@@ -1,28 +1,27 @@
 package com.Akoot.daemons;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.entity.MPlayer;
 
+import lombok.Getter;
+import lombok.Setter;
+import net.md_5.bungee.api.ChatColor;
+
 public class User extends OfflineUser
 {
-	private Player player;
-	private MPlayer mplayer;
-	private YamlConfiguration config;
-	private File configFile;
-	private int playtime;
+	private @Getter Player player;
+	private @Getter MPlayer mplayer;
+	private @Getter @Setter int playtime;
 
 	public User(Player player)
 	{
+		super(player.getUniqueId());
 		this.player = player;
-		this.configFile = new File(Daemons.getInstance().getUsersFolder(), player.getUniqueId() + ".yml");
 	}
 
 	public User(MPlayer mplayer)
@@ -30,10 +29,10 @@ public class User extends OfflineUser
 		this(mplayer.getPlayer());
 		this.mplayer = mplayer;
 	}
-	
-	public MPlayer getMPlayer()
+
+	public String getName()
 	{
-		return mplayer;
+		return player.getName();
 	}
 
 	public UUID getUniqueID()
@@ -41,35 +40,19 @@ public class User extends OfflineUser
 		return player.getUniqueId();
 	}
 
+	public String getStrippedDisplayName()
+	{
+		return ChatColor.stripColor(player.getDisplayName());
+	}
+
 	public String getDisplayName()
 	{
 		return player.getDisplayName();
 	}
 
-	public Configuration getConfig()
-	{
-		return config;
-	}
-
 	public void setDisplayName(String newName)
 	{
 		this.player.setDisplayName(newName);
-	}
-	
-	public void loadConfig()
-	{
-		if(!configFile.exists())
-		{
-			try
-			{
-				configFile.createNewFile();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		this.config = YamlConfiguration.loadConfiguration(configFile);
 	}
 
 	public void saveConfig()

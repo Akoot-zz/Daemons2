@@ -22,6 +22,10 @@ apply plugin: 'eu.appsatori.fatjar'
 apply plugin: 'de.undercouch.download'
 
 apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = "com.Akoot"
+version = project.property("version")
 
 repositories {
     mavenLocal()
@@ -42,6 +46,7 @@ dependencies {
   }
   compile files('lib/Akoot-Util.jar')
   compile files('lib/MassiveCore.jar', 'lib/Factions.jar', 'lib/Vault.jar'), { ext { fatJarExclude = true } }
+  compileOnly "org.projectlombok:lombok:1.16.14"
 }
 
 processResources {
